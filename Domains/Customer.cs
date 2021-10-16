@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace Domains
 {
-    public class Image
+    public class Customer
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public string ImageKey { get; set; }
+        public string CustomerId { get; set; }
 
         [Required]
-        public string ImageLink { get; set; }
+        public string EmailAddress { get; set; }
 
-        [Required]
-        public virtual House House { get; set; }
+        public virtual FinancialInformation FinancialInformation { get; set; }
+
+        public virtual ICollection<MortgageOffer> MortgageOffers { get; set; }
     }
 }
