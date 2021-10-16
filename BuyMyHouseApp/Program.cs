@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Services;
+using Services.Interfaces;
 using System.Threading.Tasks;
 
 namespace BuyMyHouseApp
@@ -27,7 +29,12 @@ namespace BuyMyHouseApp
         {
             Services.AddSingleton<IOpenApiHttpTriggerContext, OpenApiHttpTriggerContext>();
             Services.AddSingleton<IOpenApiTriggerFunction, OpenApiTriggerFunction>();
-            Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("AzureWebJobsStorage"));
+            //Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("AzureWebJobsStorage"));
+            Services.AddSingleton<ICustomerService, CustomerService>();
+            Services.AddSingleton<IHouseService, HouseService>();
+            Services.AddSingleton<DatabaseContext>();
+            Services.AddSingleton<CustomerDb>();
+            Services.AddSingleton<HouseDb>();
         }
     }
 }

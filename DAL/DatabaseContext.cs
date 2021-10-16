@@ -9,12 +9,10 @@ namespace DAL
         public DbSet<Customer> Customers { get; set; }
         public DbSet<House> Houses { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
-        //}
-
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BuyMyHouseDb;Trusted_Connection=True;");
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

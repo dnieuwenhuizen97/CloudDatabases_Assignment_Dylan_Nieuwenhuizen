@@ -20,5 +20,10 @@ namespace Domains
         public string CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
+
+        public FinancialInformation(double annualSalary)
+        {
+            AnnualSalary = annualSalary;
+        }
     }
 }
