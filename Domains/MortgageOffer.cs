@@ -17,7 +17,13 @@ namespace Domains
         [Required]
         public double MaxAmountToBorrow { get; set; }
 
-        [Required]
+        public string CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
+
+        public MortgageOffer(double maxAmountToBorrow)
+        {
+            MaxAmountToBorrow = maxAmountToBorrow;
+        }
     }
 }

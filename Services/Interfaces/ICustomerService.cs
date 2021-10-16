@@ -1,4 +1,5 @@
-﻿using Domains.DTO;
+﻿using Domains;
+using Domains.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Services.Interfaces
     public interface ICustomerService
     {
         Task<FinancialInformationDTO> UpdateCustomerFinancialInfo(string customerId, double salary);
+        Task CalculateCustomersMortgageOffers();
     }
 }

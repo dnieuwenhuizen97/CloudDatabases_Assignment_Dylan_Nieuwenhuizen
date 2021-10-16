@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211016131622_initial")]
+    [Migration("20211016191913_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,14 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -98,7 +106,6 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CustomerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("MaxAmountToBorrow")
@@ -106,7 +113,9 @@ namespace DAL.Migrations
 
                     b.HasKey("MortgageOfferId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
 
                     b.ToTable("MortgageOffer");
                 });
@@ -134,10 +143,8 @@ namespace DAL.Migrations
             modelBuilder.Entity("Domains.MortgageOffer", b =>
                 {
                     b.HasOne("Domains.Customer", "Customer")
-                        .WithMany("MortgageOffers")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("MortgageOffers")
+                        .HasForeignKey("Domains.MortgageOffer", "CustomerId");
 
                     b.Navigation("Customer");
                 });

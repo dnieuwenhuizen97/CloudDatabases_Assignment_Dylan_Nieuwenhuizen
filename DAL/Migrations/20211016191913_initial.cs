@@ -11,6 +11,8 @@ namespace DAL.Migrations
                 columns: table => new
                 {
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -55,7 +57,7 @@ namespace DAL.Migrations
                 {
                     MortgageOfferId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MaxAmountToBorrow = table.Column<double>(type: "float", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,7 +67,7 @@ namespace DAL.Migrations
                         column: x => x.CustomerId,
                         principalTable: "Customers",
                         principalColumn: "CustomerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,7 +104,9 @@ namespace DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_MortgageOffer_CustomerId",
                 table: "MortgageOffer",
-                column: "CustomerId");
+                column: "CustomerId",
+                unique: true,
+                filter: "[CustomerId] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

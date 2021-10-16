@@ -28,5 +28,24 @@ namespace DAL
 
             return customer.FinancialInformation;
         }
+
+        public async Task<List<Customer>> FindAllCustomers()
+        {
+            List<Customer> customers = await _dbContext.Customers
+                                                .Include(c => c.MortgageOffers)
+                                                .Include(c => c.FinancialInformation)
+                                                .Where(c => c.FinancialInformation != null)
+                                                .ToListAsync();
+
+            return customers;
+        }
+
+        public async Task UpdateCustomersMortgageOffers(List<Customer> customers)
+        {
+            List<Customer> oldCustomers = await FindAllCustomers();
+
+            oldCustomers = customers;
+            _dbContext.SaveChanges();
+        }
     }
 }

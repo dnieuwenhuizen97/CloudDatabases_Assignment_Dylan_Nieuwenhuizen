@@ -28,6 +28,14 @@ namespace DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
@@ -96,7 +104,6 @@ namespace DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CustomerId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("MaxAmountToBorrow")
@@ -104,7 +111,9 @@ namespace DAL.Migrations
 
                     b.HasKey("MortgageOfferId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique()
+                        .HasFilter("[CustomerId] IS NOT NULL");
 
                     b.ToTable("MortgageOffer");
                 });
@@ -132,10 +141,8 @@ namespace DAL.Migrations
             modelBuilder.Entity("Domains.MortgageOffer", b =>
                 {
                     b.HasOne("Domains.Customer", "Customer")
-                        .WithMany("MortgageOffers")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithOne("MortgageOffers")
+                        .HasForeignKey("Domains.MortgageOffer", "CustomerId");
 
                     b.Navigation("Customer");
                 });

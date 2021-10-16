@@ -15,10 +15,16 @@ namespace Domains
         public string CustomerId { get; set; }
 
         [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
+        [Required]
         public string EmailAddress { get; set; }
 
         public virtual FinancialInformation FinancialInformation { get; set; }
 
-        public virtual ICollection<MortgageOffer> MortgageOffers { get; set; }
+        public virtual MortgageOffer MortgageOffers { get; set; }
     }
 }
