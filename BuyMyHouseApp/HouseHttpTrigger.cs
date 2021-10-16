@@ -1,10 +1,13 @@
 using Domains;
+using Domains.DTO;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Enums;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Services.Interfaces;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -12,6 +15,13 @@ namespace BuyMyHouseApp
 {
     public class HouseHttpTrigger
     {
+        private IHouseService HouseService { get; }
+
+        public HouseHttpTrigger(IHouseService houseService)
+        {
+            HouseService = houseService;
+        }
+
         [Function(nameof(GetHouseByPriceRange))]
         [OpenApiOperation(operationId: "getHousesByPriceRange", tags: new[] { "house" }, Visibility = OpenApiVisibilityType.Important)]
         [OpenApiParameter(name: "lowestPrice", In = ParameterLocation.Query, Required = true, Type = typeof(double), Visibility = OpenApiVisibilityType.Important)]
@@ -20,7 +30,9 @@ namespace BuyMyHouseApp
         {
             HttpResponseData response = req.CreateResponse(HttpStatusCode.OK);
 
-            await response.WriteAsJsonAsync($"The values are: {lowestPrice.ToString("0.00")} and {highestPrice.ToString("0.00")}");
+            List<HouseDTO> houseDTOs = await HouseService.GetHousesByPriceRange(lowestPrice, highestPrice);
+
+            await response.WriteAsJsonAsync(houseDTOs);
 
             return response;
         }
