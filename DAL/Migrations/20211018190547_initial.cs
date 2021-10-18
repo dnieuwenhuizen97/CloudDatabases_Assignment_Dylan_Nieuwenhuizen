@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL.Migrations
 {
@@ -57,6 +58,7 @@ namespace DAL.Migrations
                 {
                     MortgageOfferId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     MaxAmountToBorrow = table.Column<double>(type: "float", nullable: false),
+                    TimeAvailable = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>

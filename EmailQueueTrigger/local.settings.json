@@ -1,7 +1,10 @@
 {
     "IsEncrypted": false,
-    "Values": {
-        "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-        "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
-    }
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "BuyMyHouseDbConnection": "Server=(localdb)\\MSSQLLocalDB;Database=BuyMyHouseDb;Trusted_Connection=True;",
+    "SendGridMailClient": "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",
+    "SendGridEmailAddress": "640676@student.inholland.nl",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
+  }
 }

@@ -17,6 +17,9 @@ namespace Domains
         [Required]
         public double MaxAmountToBorrow { get; set; }
 
+        [Required]
+        public DateTime TimeAvailable { get; set; }
+
         public string CustomerId { get; set; }
         [ForeignKey("CustomerId")]
         public virtual Customer Customer { get; set; }
@@ -24,6 +27,7 @@ namespace Domains
         public MortgageOffer(double maxAmountToBorrow)
         {
             MaxAmountToBorrow = maxAmountToBorrow;
+            TimeAvailable = DateTime.Now.AddDays(1);
         }
     }
 }

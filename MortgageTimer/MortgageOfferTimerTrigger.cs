@@ -16,7 +16,7 @@ namespace MortgageTimer
         }
 
         [Function(nameof(CreateMortgageOfferTimed))]
-        public async Task CreateMortgageOfferTimed([TimerTrigger("0 59 23 * * *")] MyInfo myTimer, FunctionContext context)
+        public async Task CreateMortgageOfferTimed([TimerTrigger("0 9 21 * * *")] MyInfo myTimer, FunctionContext context)
         {
             var logger = context.GetLogger(nameof(CreateMortgageOfferTimed));
             logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");

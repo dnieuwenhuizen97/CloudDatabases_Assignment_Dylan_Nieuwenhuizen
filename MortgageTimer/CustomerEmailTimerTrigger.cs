@@ -15,10 +15,10 @@ namespace MortgageTimer
             CustomerService = customerService;
         }
 
-        [Function(nameof(SendMortgageOfferEmails))]
-        public async Task SendMortgageOfferEmails([TimerTrigger("0 0 08 * * *")] MyInfo myTimer, FunctionContext context)
+        [Function(nameof(SendMortgageOfferToQueue))]
+        public async Task SendMortgageOfferToQueue([TimerTrigger("0 0 08 * * *")] MyInfo myTimer, FunctionContext context)
         {
-            var logger = context.GetLogger(nameof(SendMortgageOfferEmails));
+            var logger = context.GetLogger(nameof(SendMortgageOfferToQueue));
             logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             logger.LogInformation($"Next timer schedule at: {myTimer.ScheduleStatus.Next}");
 

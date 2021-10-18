@@ -61,5 +61,15 @@ namespace DAL
 
             return customersWithFinancialInformation;
         }
+
+        public async Task<Customer> FindCustomerMortgageOffers(string customerId)
+        {
+            Customer customer = await _dbContext.Customers
+                                                .Include(c => c.MortgageOffers)
+                                                .Include(c => c.FinancialInformation)
+                                                .FirstOrDefaultAsync(c => c.CustomerId == customerId);
+
+            return customer;
+        } 
     }
 }
