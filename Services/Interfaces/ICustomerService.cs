@@ -12,5 +12,6 @@ namespace Services.Interfaces
     {
         Task<FinancialInformationDTO> UpdateCustomerFinancialInfo(string customerId, double salary);
         Task CalculateCustomersMortgageOffers();
+        Task AddCustomersToQueue();
     }
 }

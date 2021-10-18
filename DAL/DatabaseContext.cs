@@ -11,7 +11,7 @@ namespace DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=BuyMyHouseDb;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(Environment.GetEnvironmentVariable("BuyMyHouseDbConnection"));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -11,10 +11,12 @@ namespace Services
 {
     public class CustomerService : ICustomerService
     {
+        private IStorageService StorageService { get; }
         private CustomerDb CustomerDb { get; }
 
-        public CustomerService(CustomerDb customerDb)
+        public CustomerService(IStorageService storageService, CustomerDb customerDb)
         {
+            StorageService = storageService;
             CustomerDb = customerDb;
         }
 
@@ -37,6 +39,14 @@ namespace Services
             }
 
             await CustomerDb.UpdateCustomersMortgageOffers(customers);
+        }
+
+        public async Task AddCustomersToQueue()
+        {
+            List<Customer> customers = await CustomerDb.FindCustomersWithFinancialInformation();
+
+            foreach (Customer c in customers)
+                await StorageService.AddMessagesToQueue(c.CustomerId);
         }
     }
 }

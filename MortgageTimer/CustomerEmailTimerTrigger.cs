@@ -22,7 +22,7 @@ namespace MortgageTimer
             logger.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
             logger.LogInformation($"Next timer schedule at: {myTimer.ScheduleStatus.Next}");
 
-            //await CustomerService.
+            await CustomerService.AddCustomersToQueue();
         }
     }
 }

@@ -5,6 +5,7 @@ using Domains.Helpers;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,12 @@ namespace Services
             List<House> houses = await HouseDb.FindHousesByPriceRange(lowest, highest);
 
             return HouseHelper.ListToDTO(houses);
+        }
+
+        public async Task UploadHouseImage(string houseId, Stream image)
+        {
+            int i = await HouseDb.GetNumberOfHouseImagesById(houseId);
+            Console.WriteLine(i);
         }
     }
 }

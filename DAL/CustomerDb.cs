@@ -47,5 +47,19 @@ namespace DAL
             oldCustomers = customers;
             _dbContext.SaveChanges();
         }
+
+        public async Task<List<Customer>> FindCustomersWithFinancialInformation()
+        {
+            List<Customer> customers = await FindAllCustomers();
+            List<Customer> customersWithFinancialInformation = new List<Customer>();
+
+            foreach (Customer customer in customers)
+            {
+                if (customer.FinancialInformation != null)
+                    customersWithFinancialInformation.Add(customer);
+            }
+
+            return customersWithFinancialInformation;
+        }
     }
 }

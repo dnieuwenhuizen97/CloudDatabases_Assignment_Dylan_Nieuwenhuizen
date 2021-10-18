@@ -29,7 +29,6 @@ namespace BuyMyHouseApp
         {
             Services.AddSingleton<IOpenApiHttpTriggerContext, OpenApiHttpTriggerContext>();
             Services.AddSingleton<IOpenApiTriggerFunction, OpenApiTriggerFunction>();
-            //Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("AzureWebJobsStorage"));
             Services.AddSingleton<ICustomerService, CustomerService>();
             Services.AddSingleton<IHouseService, HouseService>();
             Services.AddSingleton<DatabaseContext>();

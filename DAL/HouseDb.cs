@@ -27,5 +27,14 @@ namespace DAL
 
             return houses;
         }
+
+        public async Task<int> GetNumberOfHouseImagesById(string houseId)
+        {
+            House house = await _dbContext.Houses
+                                            .Include(h => h.Images)
+                                            .FirstOrDefaultAsync(h => h.HouseId == houseId);
+
+            return house.Images.ToList().Count;
+        }
     }
 }
