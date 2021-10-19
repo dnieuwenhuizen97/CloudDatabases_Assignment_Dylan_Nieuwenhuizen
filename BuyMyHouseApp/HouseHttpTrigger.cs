@@ -1,5 +1,7 @@
 using Domains;
 using Domains.DTO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
@@ -39,15 +41,14 @@ namespace BuyMyHouseApp
 
         [Function(nameof(UploadHouseImage))]
         [OpenApiOperation(operationId: "uploadHouseImage", tags: new[] { "house" }, Visibility = OpenApiVisibilityType.Important)]
-        [OpenApiRequestBody(contentType: "image/png", bodyType: typeof(MediaTypeNames.Image), Required = true, Description = "Image to upload.")]
-        [OpenApiParameter(name: "houseId", In = ParameterLocation.Query, Required = true, Type = typeof(double), Visibility = OpenApiVisibilityType.Important)]
+        [OpenApiParameter(name: "houseId", In = ParameterLocation.Query, Required = true, Type = typeof(string), Visibility = OpenApiVisibilityType.Important)]
         public async Task<HttpResponseData> UploadHouseImage([HttpTrigger(AuthorizationLevel.Anonymous, "POST", Route = "house/images")] HttpRequestData req, string houseId)
         {
             HttpResponseData response = req.CreateResponse(HttpStatusCode.OK);
 
-            await HouseService.UploadHouseImage(houseId, req.Body);
+            string houseImageUrl = await HouseService.UploadHouseImage(houseId);
 
-            await response.WriteAsJsonAsync("");
+            await response.WriteAsJsonAsync(houseImageUrl);
 
             return response;
         }

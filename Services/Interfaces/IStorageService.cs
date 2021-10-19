@@ -2,6 +2,7 @@
 using Microsoft.WindowsAzure.Storage;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,5 +15,6 @@ namespace Services.Interfaces
         Task AddMortgageOfferToBlob(CustomerDTO customer, string customerId);
         Task<string> GetMortgageOfferUrl(string customerId);
         Task AddMessagesToQueue(string userId);
+        Task<string> AddHouseImageToBlob(Stream image, string houseId, string imageNumber);
     }
 }

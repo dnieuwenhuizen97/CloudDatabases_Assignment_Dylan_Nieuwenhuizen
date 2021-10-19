@@ -3,6 +3,7 @@
   "Values": {
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "BuyMyHouseDbConnection": "Server=(localdb)\\MSSQLLocalDB;Database=BuyMyHouseDb;Trusted_Connection=True;",
+    "RandomImages": "https://picsum.photos/500",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated"
   }
 }

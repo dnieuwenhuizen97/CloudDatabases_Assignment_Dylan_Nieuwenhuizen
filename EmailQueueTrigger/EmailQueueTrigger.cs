@@ -21,7 +21,7 @@ namespace EmailQueueTrigger
             var logger = context.GetLogger("Function1");
             logger.LogInformation($"C# Queue trigger function processed: {QueueItem}");
 
-            await CustomerService.SendMortgageEmailToCustomer(QueueItem);
+            CustomerService.SendMortgageEmailToCustomer(QueueItem);
         }
     }
 }

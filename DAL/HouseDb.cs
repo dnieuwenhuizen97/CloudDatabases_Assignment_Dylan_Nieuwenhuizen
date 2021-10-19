@@ -36,5 +36,16 @@ namespace DAL
 
             return house.Images.ToList().Count;
         }
+
+        public async Task AddHouseImageUrlToTable(string url, string houseId)
+        {
+            House house = await _dbContext.Houses
+                                            .Include(h => h.Images)
+                                            .FirstOrDefaultAsync(h => h.HouseId == houseId);
+
+            house.Images.Add(new Image(url));
+
+            _dbContext.SaveChanges();
+        }
     }
 }

@@ -1,10 +1,13 @@
-﻿using Domains.DTO;
+﻿using Azure.Storage.Sas;
+using Domains.DTO;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +16,22 @@ namespace Services
 {
     public class StorageService : IStorageService
     {
+        public async Task<string> AddHouseImageToBlob(Stream image, string houseId, string imageNumber)
+        {
+            CloudStorageAccount storageAccount = await GetStorageAccount();
+
+            CloudBlobClient client = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer container = client.GetContainerReference("house-image-blob");
+            await container.CreateIfNotExistsAsync();
+
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference($"house{houseId}-image{imageNumber}");
+
+            blockBlob.Properties.ContentType = "image/png";
+            await blockBlob.UploadFromStreamAsync(image);
+
+            return blockBlob.Uri.ToString();
+        }
+
         public async Task AddMessagesToQueue(string userId)
         {
             CloudStorageAccount storageAccount = await GetStorageAccount();
@@ -46,9 +65,17 @@ namespace Services
             CloudBlobContainer container = client.GetContainerReference("mortgage-offer-blob");
             await container.CreateIfNotExistsAsync();
 
+
             CloudBlockBlob blockBlob = container.GetBlockBlobReference(customerId);
 
-            return blockBlob.Uri.ToString();
+            string sas = blockBlob.GetSharedAccessSignature(
+                new SharedAccessBlobPolicy()
+                {
+                    Permissions = SharedAccessBlobPermissions.Read,
+                    SharedAccessExpiryTime = DateTime.Now.AddDays(1)
+                });
+
+            return string.Format(CultureInfo.InvariantCulture, "{0}{1}", blockBlob.Uri, sas);
         }
 
         public async Task<CloudStorageAccount> GetStorageAccount()

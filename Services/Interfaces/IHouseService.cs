@@ -11,6 +11,6 @@ namespace Services.Interfaces
     public interface IHouseService
     {
         Task<List<HouseDTO>> GetHousesByPriceRange(double lowest, double highest);
-        Task UploadHouseImage(string houseId, Stream image);
+        Task<string> UploadHouseImage(string houseId);
     }
 }

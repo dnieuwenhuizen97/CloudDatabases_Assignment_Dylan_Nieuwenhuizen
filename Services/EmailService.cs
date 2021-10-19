@@ -22,7 +22,7 @@ namespace Services
                 var to = new EmailAddress(emailAddress, "");
                 var plainTextContent = "Thank you for your interest in BuyMyHouse. Through this link you can view your personal mortgage offer";
                 var htmlContent = $"<div><strong>Thank you for your interest in BuyMyHouse.</strong><br>" +
-                                    $"<p>Through <a href={blobUrl}>this link</a> you can view your personal mortgage offer.</p></div>";
+                                    $"<p>Through <a href={blobUrl}>this link</a> you can view your personal mortgage offer.<br>The link will be available for 24 hours</p></div>";
                 var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
                 var response = await client.SendEmailAsync(msg);
             }

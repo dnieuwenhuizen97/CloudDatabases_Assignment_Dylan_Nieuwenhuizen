@@ -24,9 +24,9 @@ namespace MortgageTimer
 
         private static void Configure(HostBuilderContext buider, IServiceCollection Services)
         {
-            //Services.AddScoped(_ => { return new BlobServiceClient(buider.Configuration.GetConnectionString("AzureBlobStorage")); });
             Services.AddSingleton<ICustomerService, CustomerService>();
             Services.AddSingleton<IStorageService, StorageService>();
+            Services.AddSingleton<IEmailService, EmailService>();
             Services.AddSingleton<DatabaseContext>();
             Services.AddSingleton<CustomerDb>();
         }

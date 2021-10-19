@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Domains.DTO
 {
-    public class HouseDTO
+    public class ImageDTO
     {
-        public double Price { get; set; }
-        public List<string> ImagesUrls { get; set; }
+        public List<string> ImageUrls { get; set; }
     }
 }

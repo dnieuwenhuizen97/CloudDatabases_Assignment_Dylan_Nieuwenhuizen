@@ -38,8 +38,6 @@ namespace Services
                 double salary = customer.FinancialInformation.AnnualSalary;
 
                 customer.MortgageOffers = new MortgageOffer(salary / 2 * 30);
-
-                Console.WriteLine("Time available: " + customer.MortgageOffers.TimeAvailable.ToString());
             }
 
             await CustomerDb.UpdateCustomersMortgageOffers(customers);

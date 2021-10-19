@@ -19,5 +19,10 @@ namespace Domains
 
         [Required]
         public virtual House House { get; set; }
+
+        public Image(string imageLink)
+        {
+            ImageLink = imageLink;
+        }
     }
 }

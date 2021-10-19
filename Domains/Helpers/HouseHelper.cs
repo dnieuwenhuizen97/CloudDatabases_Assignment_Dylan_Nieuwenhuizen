@@ -14,7 +14,7 @@ namespace Domains.Helpers
             return new HouseDTO
             {
                 Price = house.Price,
-                Images = house.Images.ToList()
+                ImagesUrls = HouseImagesToDTO(house.Images.ToList())
             };
         }
 
@@ -28,6 +28,18 @@ namespace Domains.Helpers
             }
 
             return houseDTOs;
+        }
+
+        public static List<string> HouseImagesToDTO(List<Image> images)
+        {
+            List<string> urls = new List<string>();
+
+            foreach (Image image in images)
+            {
+                urls.Add(image.ImageLink);
+            }
+
+            return urls;
         }
     }
 }
